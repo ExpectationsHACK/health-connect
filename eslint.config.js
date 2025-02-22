@@ -34,5 +34,16 @@ export default [
         { allowConstantExport: true },
       ],
     },
+    compilerOptions: {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  }
   },
 ]
