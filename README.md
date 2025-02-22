@@ -48,6 +48,9 @@ Our innovative project aims to transform the healthcare landscape by tackling th
 - **JavaScript (ES6+)**: Core language for dynamic functionality.
 - **API Integration**: For dynamic and real-time content updates.
 - **Tail-Wind css**: Styling and layout design.
+- **Open AI (LLM)**
+- **Python**
+- **Django**
 
 ---
 
@@ -62,7 +65,7 @@ Our innovative project aims to transform the healthcare landscape by tackling th
 2. Navigate to the project directory:
 
    ```bash
-   cd instagram-clone
+   cd health-connect
    ```
 
 3. Install dependencies:
@@ -89,7 +92,7 @@ Our innovative project aims to transform the healthcare landscape by tackling th
 ## Screenshots
 
 ![Post Feed Placeholder](./src/assets/signup.jpg) 
-![Post Feed Placeholder](./src/assets/bank-app4.png) 
+ 
 
 
 ---
@@ -100,16 +103,30 @@ This project was developed collaboratively by a team of contributors specializin
 
 
 
+
+
+**Owolabi Akintan**  
+- GitHub: [Owolabi Akintan](https://github.com/owolabi-develop)  
+- Email: awolabidevelop@gmail.com.com
+
+**Felix Divine**  
+- GitHub: [ExpectationsHACK](https://github.com/ExpectationsHACK)  
+- Email: chestervonwest@gmail.com
+
+**Jeremiah Adekitan**  
+- GitHub: [Jeremiah Adekitan](https://github.com/jadekitan)  
+- Email: jadekitan23@gmail.com
+
 **Andrew Onoriode Ayemo**  
 - GitHub: [Ayemo-AndrewGold](https://github.com/ayemo-andrewgold)  
 - Email: ayemoandrewgold@gmail.com
 
+**Maryam Ibrahim Iyedoh**  
+- GitHub: [Maryam Ibrahim Iyedoh](https://github.com/bluwey)  
+- Email: maryamiyedoh@gmail.com
 
 
-**Full Name**  
-- Github: [](https://github.com/) 
-
-- Email: 
+ 
 
 
 
