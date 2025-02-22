@@ -23,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 backend/venv
+backend/health/.env
+

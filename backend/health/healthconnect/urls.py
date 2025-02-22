@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('login/', LoginView.as_view(),name='login'),
+    path('generate-diagnosis',generate_diagnosis.as_view(),name='generate-diagnosis')
 ] +  router.urls + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

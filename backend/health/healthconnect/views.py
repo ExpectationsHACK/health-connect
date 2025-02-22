@@ -12,9 +12,10 @@ from rest_framework.parsers import MultiPartParser, FormParser,JSONParser
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from .models.account import HealthUser
 from .models.doctor import DoctorsModel
-from .models.patient import DiagnosisModel,PatientGenarateResult
-
-
+from .models.patient import PatientGenarateResult
+from .models.patient import DiagnosisModel
+from rest_framework.views import APIView
+from .llm_ai.utils import generate_result_for_patient_diagnosis
 class CreateAccount(viewsets.ModelViewSet):
     """
     endpoint to create account for employer or applicant
@@ -57,6 +58,7 @@ class LoginView(ObtainAuthToken):
             serializer.is_valid(raise_exception=True)
             user = serializer.validated_data['user']
             user.save()
+
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
@@ -112,3 +114,41 @@ class PatientGeneratedResultView(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
+        
+        
+        
+        
+        
+
+
+class generate_diagnosis(APIView):
+    """ """
+    permission_classes = [IsAuthenticated]
+    
+    def post(self,request):
+        user = request.user
+        try:
+           # get avaliable_professional_doctors
+           avaliable_professional_doctors = DoctorsModel.objects.all()
+           print("doctor",avaliable_professional_doctors)
+           
+            # get patient_diagnosis_result
+           patient_diagnosis_result = get_object_or_404(DiagnosisModel,user=user)
+           
+           ## ai generate health tips
+           ai_diagnosis_result = generate_result_for_patient_diagnosis(patient_diagnosis_result,avaliable_professional_doctors)
+           
+           print("ai",ai_diagnosis_result)
+           
+           ## create patient GenarateResult
+           
+        #    PatientGenarateResult.objects.create(user=user)
+           
+           
+           
+           return Response({"details":"result generated successfully"},status=status.HTTP_200_OK)
+        
+               
+        except Exception as e:
+            return Response({"error":f"error occur{e}"})
+       
