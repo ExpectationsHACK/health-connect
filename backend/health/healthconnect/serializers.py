@@ -7,7 +7,12 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
 
 
-
+class PatientGenarateResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PatientGenarateResult
+        fields = '__all__'
+        read_only_fields = ['is_active', 'id','user']
+    
 
 class DiagnosisSerializer(serializers.ModelSerializer):
     class Meta:
@@ -76,3 +81,5 @@ class LoginSerializer(serializers.Serializer):
         attrs['user'] = user
         
         return attrs
+    
+    

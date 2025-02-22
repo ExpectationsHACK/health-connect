@@ -83,11 +83,29 @@ class PatientDiagnosisView(viewsets.ModelViewSet):
 
 class DoctorDetailView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser, JSONParser]  # To handle file uploads
+    parser_classes = [MultiPartParser, FormParser, JSONParser]  # To handle 
     serializer_class = DoctorModelSerializer
 
     def get_queryset(self):
         return DoctorsModel.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+        
+        
+        
+
+
+class PatientGeneratedResultView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+ 
+    serializer_class = PatientGenarateResultSerializer
+
+    def get_queryset(self):
+        return PatientGenarateResult.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
