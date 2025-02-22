@@ -136,16 +136,20 @@ class generate_diagnosis(APIView):
            patient_diagnosis_result = get_object_or_404(DiagnosisModel,user=user)
            
            ## ai generate health tips
-           ai_diagnosis_result = generate_result_for_patient_diagnosis(patient_diagnosis_result,avaliable_professional_doctors)
+           ai_diagnosis_result = generate_result_for_patient_diagnosis(patient_diagnosis_result)
            
-           print("ai",ai_diagnosis_result)
+           print("ai",ai_diagnosis_result.daily_health_tip)
            
            ## create patient GenarateResult
            
-        #    PatientGenarateResult.objects.create(user=user)
-           
-           
-           
+           obj,created =PatientGenarateResult.objects.update_or_create(user=user,
+            daily_health_tip=ai_diagnosis_result.daily_health_tip,
+            hydration_Tip=ai_diagnosis_result.hydration_tip,mental_health_tip=ai_diagnosis_result.mental_health_tip,
+            sleep_tip=ai_diagnosis_result.sleep_tip,
+            stress_management_tip=ai_diagnosis_result.stress_management_tip,healthy_lifestyle_habit=ai_diagnosis_result.healthy_lifestyle_habit,
+             Immune_boosting_tip=ai_diagnosis_result.immune_boosting_tip,
+             food_and_nutrution=ai_diagnosis_result.food_and_nutrution
+            )
            return Response({"details":"result generated successfully"},status=status.HTTP_200_OK)
         
                
