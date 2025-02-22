@@ -22,7 +22,7 @@ import {
 } from "../ui/steps";
 import Hero from "../../assets/patient.svg";
 
-const Patient = () => {
+const SymptomsAnalysis = () => {
   return (
     <VStack w="100%" h="100%" align="flex-start" gap="50px" px="100px">
       <Flex w="100%" justify="space-between" align="center" pt="50px">
@@ -116,4 +116,4 @@ const Patient = () => {
   );
 };
 
-export default Patient;
+export default SymptomsAnalysis;
