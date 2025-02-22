@@ -16,7 +16,7 @@ import { useFormik } from "formik";
 import { toaster } from "../../components/ui/toaster";
 import { PasswordInput } from "../../components/ui/password-input";
 import { BsWindowSidebar } from "react-icons/bs";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,49 +62,53 @@ const Login = () => {
     },
     validate,
     onSubmit: async (values) => {
-      window.location.href = "/patient/dashboard";
-      // try {
-      //   setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      //   // Replace with your API endpoint
-      //   const response = await fetch("https://api.healthconnect.com/signup", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       fullName: values.fullName,
-      //       email: values.email,
-      //       password: values.password,
-      //     }),
-      //   });
+        // Replace with your API endpoint
+        const response = await fetch(
+          "https://3e30-102-221-239-130.ngrok-free.app/healthconnect/login/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: values.email,
+              password: values.password,
+            }),
+          }
+        );
+        if (response.ok) {
+          const { token } = await response.json();
+          const setToken = localStorage.setItem("token", token);
 
-      //   if (!response.ok) {
-      //     throw new Error("Signup failed");
-      //   }
+          console
+        }
+        if (!response.ok) {
+          throw new Error("Signup failed");
+        }
 
-      //   const data = await response.json();
+        toaster.create({
+          title: "Account created successfully!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
 
-      //   toaster.create({
-      //     title: "Account created successfully!",
-      //     status: "success",
-      //     duration: 5000,
-      //     isClosable: true,
-      //   });
-
-      //   // Handle successful signup (e.g., redirect to login)
-      //   // window.location.href = '/login';
-      // } catch (error) {
-      //   toaster.create({
-      //     title: "Error creating account",
-      //     description: error.message,
-      //     status: "error",
-      //     duration: 5000,
-      //     isClosable: true,
-      //   });
-      // } finally {
-      //   setIsLoading(false);
-      // }
+        // Handle successful signup (e.g., redirect to login)
+        // window.location.href = '/patient/dashboard';
+      } catch (error) {
+        toaster.create({
+          title: "Error creating account",
+          description: error.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } finally {
+        setIsLoading(false);
+      }
     },
   });
 
@@ -130,7 +134,7 @@ const Login = () => {
         />
         <VStack w="100%" align="flex-start" gap="50px">
           <VStack w="100%" align="flex-start" gap="20px">
-            <Heading fontSize="24px">Welcome Back</Heading>
+            <Heading fontSize="24px">Login</Heading>
             <Text>
               Don't have an account?{" "}
               <Link to="/patient/signup">
@@ -189,8 +193,8 @@ const Login = () => {
                     size="sm"
                     color="white"
                     type="submit"
-                    isLoading={isLoading}
-                    loadingText="Submitting"
+                    loading={formik.isSubmitting}
+                    disabled={formik.isSubmitting}
                   >
                     Login
                     <Icon as={IoIosArrowForward} ml={2} />

@@ -14,7 +14,7 @@ import Hero from "../../assets/patient.svg";
 import { IoIosArrowForward } from "react-icons/io";
 import { useFormik } from "formik";
 import { toaster } from "../../components/ui/toaster";
-import { PasswordInput } from "../../components/ui/password-input"
+import { PasswordInput } from "../../components/ui/password-input";
 import { BsWindowSidebar } from "react-icons/bs";
 
 const Signup = () => {
@@ -24,11 +24,18 @@ const Signup = () => {
   const validate = (values) => {
     const errors = {};
 
-    // Full Name validation
-    if (!values.fullName) {
-      errors.fullName = "Full name is required";
-    } else if (values.fullName.length < 2) {
-      errors.fullName = "Name must be at least 2 characters";
+    // First Name validation
+    if (!values.first_name) {
+      errors.first_name = "First name is required";
+    } else if (values.first_name.length < 2) {
+      errors.first_name = "Name must be at least 2 characters";
+    }
+
+    // Last Name validation
+    if (!values.last_name) {
+      errors.last_name = "Last name is required";
+    } else if (values.last_name.length < 2) {
+      errors.last_name = "Name must be at least 2 characters";
     }
 
     // Email validation
@@ -63,54 +70,56 @@ const Signup = () => {
 
   const formik = useFormik({
     initialValues: {
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
     },
     validate,
     onSubmit: async (values) => {
-      window.location.href = "/patient/dashboard"
-      // try {
-      //   setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      //   // Replace with your API endpoint
-      //   const response = await fetch("https://api.healthconnect.com/signup", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       fullName: values.fullName,
-      //       email: values.email,
-      //       password: values.password,
-      //     }),
-      //   });
+        // Replace with your API endpoint
+        const response = await fetch("https://3e30-102-221-239-130.ngrok-free.app/healthconnect/create-account/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            first_name: values.first_name,
+            last_name: values.last_name,
+            email: values.email,
+            password: values.password,
+          }),
+        });
 
-      //   if (!response.ok) {
-      //     throw new Error("Signup failed");
-      //   }
+        if (!response.ok) {
+          throw new Error("Signup failed");
+        }
 
-      //   const data = await response.json();
+        const data = await response.json();
 
-      //   toaster.create({
-      //     title: "Account created successfully!",
-      //     status: "success",
-      //     duration: 5000,
-      //     isClosable: true,
-      //   });
+        toaster.create({
+          title: "Account created successfully!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
 
-      //   // Handle successful signup (e.g., redirect to login)
-      //   // window.location.href = '/login';
-      // } catch (error) {
-      //   toaster.create({
-      //     title: "Error creating account",
-      //     description: error.message,
-      //     status: "error",
-      //     duration: 5000,
-      //     isClosable: true,
-      //   });
-      // } finally {
-      //   setIsLoading(false);
-      // }
+        // Handle successful signup
+        window.location.href = "/patient/login";
+      } catch (error) {
+        toaster.create({
+          title: "Error creating account",
+          description: error.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } finally {
+        setIsLoading(false);
+      }
     },
   });
 
@@ -147,24 +156,50 @@ const Signup = () => {
           <form onSubmit={formik.handleSubmit} style={{ width: "100%" }}>
             <VStack w="100%" align="flex-start">
               <VStack w="100%" align="flex-start" gap="20px">
-                <Field.Root required
-                  invalid={formik.touched.fullName && formik.errors.fullName}
+                <Flex
+                  w="100%"
+                  justify="space-between"
+                  align="flex-start"
+                  gap="20px"
                 >
-                  <Field.Label>Full Name</Field.Label>
-                  <Input
-                    variant="solid"
-                    bg="#f4feff"
-                    type="text"
-                    placeholder="Full Name"
-                    name="fullName"
-                    value={formik.fullName}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  <Field.ErrorText>{formik.errors.fullName}</Field.ErrorText>
-                </Field.Root>
+                  <Field.Root
+                    required
+                    invalid={formik.touched.first_name && formik.errors.first_name}
+                  >
+                    <Field.Label>First Name</Field.Label>
+                    <Input
+                      variant="solid"
+                      bg="#f4feff"
+                      type="text"
+                      placeholder="First Name"
+                      name="first_name"
+                      value={formik.first_name}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    <Field.ErrorText>{formik.errors.first_name}</Field.ErrorText>
+                  </Field.Root>
+                  <Field.Root
+                    required
+                    invalid={formik.touched.last_name && formik.errors.last_name}
+                  >
+                    <Field.Label>Last Name</Field.Label>
+                    <Input
+                      variant="solid"
+                      bg="#f4feff"
+                      type="text"
+                      placeholder="Last Name"
+                      name="last_name"
+                      value={formik.last_name}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    <Field.ErrorText>{formik.errors.last_name}</Field.ErrorText>
+                  </Field.Root>
+                </Flex>
 
-                <Field.Root required
+                <Field.Root
+                  required
                   invalid={formik.touched.email && formik.errors.email}
                 >
                   <Field.Label>Email Address</Field.Label>
@@ -181,7 +216,8 @@ const Signup = () => {
                   <Field.ErrorText>{formik.errors.email}</Field.ErrorText>
                 </Field.Root>
 
-                <Field.Root required
+                <Field.Root
+                  required
                   invalid={formik.touched.password && formik.errors.password}
                 >
                   <Field.Label>Password</Field.Label>
@@ -204,14 +240,14 @@ const Signup = () => {
                   <Button
                     variant="solid"
                     bg="#007299"
-                    w="120px"
+                    w="160px"
                     size="sm"
                     color="white"
                     type="submit"
-                    isLoading={isLoading}
-                    loadingText="Submitting"
+                    loading={formik.isSubmitting}
+                    disabled={formik.isSubmitting}
                   >
-                    Continue
+                    Create Account
                     <Icon as={IoIosArrowForward} ml={2} />
                   </Button>
                 </Flex>
