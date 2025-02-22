@@ -13,7 +13,7 @@ function Index() {
           <Heading fontSize="34px" fontWeight="700" lineHeight="34px">AI Powered Healthcare Made Simple</Heading>
           <Text>Connect with doctors, track your health and get personalized medical recommendations - all in one place.</Text>
           <Flex gap="20px">
-            <Button asChild variant="solid" w="150px" h="50px" bg="#007299" rounded="20px" color="white"><Link to="/patient">For Patients</Link>
+            <Button asChild variant="solid" w="150px" h="50px" bg="#007299" rounded="20px" color="white"><Link to="/patient/signup">For Patients</Link>
             </Button>
             <Button variant="outline" w="150px" h="50px" bg="white" rounded="20px" color="#007299">For Doctors</Button>
           </Flex>
